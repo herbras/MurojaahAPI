@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Fetch</title>
+</head>
+<body>
+    Baiquniyyah CSV dalam Terminal
+    <script>
+        console.log("Matan Baiquniyyah");
+
+        baiq()
+
+        async function baiq(){
+            const response = await fetch("Baiquniyyah.csv");
+            const data = await response.text()
+
+            const tables = data.split('\n').slice(1);
+            tables.forEach(row =>{
+                const cols = row.split(',');
+                const bayt1 = cols[0];
+                const bayt2 = cols[1];
+                const tarjama = cols[2];
+                console.log(bayt1+"  "+bayt2 +"\n"+ tarjama)
+            })
+            
+        }
+    </script>
+</body>
+</html>
