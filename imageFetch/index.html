@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="in">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChallengeSelf: Data/APIs 1</title>
+</head>
+<body>
+    <img src="" id="cat" width="360" />
+    <script>
+        console.log("Fetch gambar kucing");
+       catchCat()
+       .then(response => {
+        console.log("yaaaat")
+       })
+       .catch(error =>{
+        console.log('error!');
+        console.error(error);
+       })
+        async function catchCat(){
+            const response = await fetch('tes.png');
+            const blob = await response.blob();
+            document.getElementById('cat').src = URL.createObjectURL(blob);
+        }
+    </script>
+    
+</body>
+</html>

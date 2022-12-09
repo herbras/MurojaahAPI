@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch IMG with Arry</title>
+</head>
+<body>
+    <h1>Ahli Sunnat</h1>
+
+    <script>
+        const filenames = [
+            './img/JagoanSunat.jpg',
+            './img/Kunci.jpg',
+            './img/SunatBersama.jpg'];
+
+        catchIMG(filenames)
+        .then(response => {
+          console.log('wohooo');
+        })
+        .catch(error => {
+          console.log('errorno!');
+          console.error(error);
+        });
+
+        async function catchIMG (filenames){
+            for(let filename of filenames){
+                const response = await fetch(filename);
+                const blob = await response.blob();
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(blob);
+                img.width = '480';
+                document.body.append(img);
+            }
+        }
+    </script>
+</body>
+</html>

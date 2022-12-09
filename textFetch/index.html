@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Text</title>
+</head>
+<body>
+    <h1>قال الفقيه الزاهد ابو إسحاق إبراهيم بن مسعود الألبيري</h1>
+    <p id="syair" />
+
+    <script>
+        console.log("Fetch syair");
+
+        catchSyair()
+        .then(syair =>{
+            document.getElementById('syair').innerText = syair;
+            console.log('weeeee')
+        })
+        .catch(error=>{
+            console.log('Error!')
+            console.error(error);
+        })
+        async function catchSyair(){
+            const response = await fetch('syair.txt');
+            return response.text();
+        }
+    </script>
+    
+</body>
+</html>
