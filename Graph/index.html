@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph from CSV</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+    <h1>Data Penduduk Pekalongan</h1>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+
+    <script>
+
+        chartIt()
+        async function chartIt() {
+            const data = await dataCsv();
+            const ctx = document.getElementById('myChart');
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.desa,
+                    datasets: [{
+                        label: 'Jumlah Pria',
+                        data: data.jumlahPr,
+                        fill: true,
+                        borderWidth: 1,
+                        borderColor: 'black',
+                        backgroundColor: 'rgba(99, 255, 132, 0.5)',
+                    },{
+                        label: 'Jumlah Wanita',
+                        data: data.jumlahWn,
+                        fill: true,
+                        borderWidth: 1,
+                        borderColor: 'blue',
+                        backgroundColor: 'rgba(99, 88, 255, 0.5)',
+                    }]
+                },
+            });
+        }
+        async function dataCsv() {
+            const desa = [];
+            const jumlahPr = [];
+            const jumlahWn = [];
+            const response = await fetch("wargaPekalongan.csv");
+            const data = await response.text();
+
+            const tables = data.split('\n').slice(1);
+            tables.forEach(row => {
+                const cols = row.split(';');
+                desa.push(cols[0]);
+                jumlahPr.push(cols[1]);
+                jumlahWn.push(cols[2])
+
+            });
+            return { desa, jumlahPr, jumlahWn };
+        }
+
+    </script>
+</body>
+
+</html>
