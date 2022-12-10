@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch JSON from API</title>
+</head>
+
+<body>
+    <h1>Kamu Bulanku</h1>
+    <p id="hari"></p>
+    <div id="bulan"></div>
+    <script>
+        const d = new Date();
+        const [onlyDate] = d.toISOString().split('T')
+        const mn = d.getMonth()+1;
+        const now = onlyDate.slice(0, 4)
+        const api_url = `https://craigchamberlain.github.io/moon-data/api/moon-phase-data/${now}`
+        moonPhase()
+        const sekarang = document.createElement('h2');
+        document.getElementById('hari').append(sekarang);
+        sekarang.innerText = "Todei = " + onlyDate;
+        async function moonPhase() {
+            const response = await fetch(api_url);
+            const data = await response.json();
+            const keys = Object.keys(data)
+            for (var i = 0; i < keys.length; i++) {
+                var val = data[keys[i]];
+                // use val
+                const { Date, Phase } = val;
+                const nM = Date.split('T');
+                
+
+                if(nM[0].slice(5, 7).includes(mn)){
+                    const text = document.createElement('h2');
+                    const jam = document.createElement('h2');
+                    const Bulan = document.createElement('h2');
+                    text.innerText = "📅 = " + nM[0];
+                    jam.innerText = "⏰ = " + nM[1]
+                    if(Phase===0){
+                        Bulan.innerText = "🌑";
+                    } else if(Phase===1){
+                        Bulan.innerText = "🌓";
+                    }
+                    else if(Phase===2){
+                        Bulan.innerText = "🌕";
+                    }
+                    else if(Phase===3){
+                        Bulan.innerText = "🌗";
+                    }
+                    document.getElementById("bulan").append( Bulan,text, jam,);
+
+                }
+                
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
